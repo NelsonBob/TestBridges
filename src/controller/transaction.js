@@ -1,4 +1,4 @@
-
+const fetch = require('node-fetch');
 //list all transaction
 exports.getTransaction = (req, res, next) => {
     fetch('./myInfos.json')

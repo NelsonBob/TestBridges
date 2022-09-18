@@ -1,5 +1,4 @@
-
-
+const fetch = require('node-fetch');
 //list all account
 exports.getAccount = (req, res, next) => {
     console.log("yum")

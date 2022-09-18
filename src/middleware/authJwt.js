@@ -2,18 +2,20 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/authJwt');
 
 verifyToken = (req, res, next) => {
-    let token = req.headers['Authorization']
-
-    if (!token)
-        return res.status(403).send({ message: 'No token provided!' })
-
-    jwt.verify(token, config.secret, (err, decoded) => {
-        if (err)
-            return res.status(401).send({ message: "Unauthorized!" })
-
-        req.userId = decoded.id
-        next()
-    })
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, config.secret);
+        const userId = decodedToken.id;
+        if (req.body.userId && req.body.userId !== userId) {
+            throw 'Invalid user ID';
+        } else {
+            next();
+        }
+    } catch {
+        res.status(401).json({
+            error: new Error('Invalid request!')
+        });
+    }
 }
 
 

@@ -8,6 +8,6 @@ const TransactionCtrl = require('../controller/transaction');
 router.post('/login', auth.login)
 router.post('/signup', auth.signup)
 
-router.get('/accounts', [authJwt.verifyToken], AccountCtrl.getAccount);
+router.get('/accounts',  AccountCtrl.getAccount);
 router.get('/accounts/:acc_number/transactions', [authJwt.verifyToken], TransactionCtrl.getTransaction);
 module.exports = router
